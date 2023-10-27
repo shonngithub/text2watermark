@@ -1,4 +1,5 @@
-Node.js 图片添加文字/图片水印(原账号丢失,fork在本仓库维护)
+Node.js 图片添加文字/图片水印
+###### (原账号丢失,fork在本仓库维护)
 
 ## Installation 安装
 	$ npm install text2watermark
