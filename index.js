@@ -18,13 +18,28 @@ async function convert(bufferSourceImage, text = '测试水印', options = {}, f
   fontPath = fontPath || pathd;
   const defaultOptions = {fontSize: 14, path: {'fill': 'black'}, position:{x:10,y:10}};
 
-  const text2svg = new Text2svg(fontPath);
-  const svg = text2svg.toSVG(text, Object.assign({}, defaultOptions, options));
-  // console.log(svg)
-  if (!svg.svg) {
-    return 'Svg conversion failed'
+
+  let roundedCorners;
+
+  if(options['type']=='img'){
+    roundedCorners = Buffer.from(options['watermarkImg']);
+  }else{
+    const text2svg = new Text2svg(fontPath);
+    const svg = text2svg.toSVG(text, Object.assign({}, defaultOptions, options));
+    // console.log(svg)
+    if (!svg.svg) {
+      return 'Svg conversion failed'
+    }
+    roundedCorners = Buffer.from(svg.svg);
   }
-  const roundedCorners = Buffer.from(svg.svg);
+
+  // const text2svg = new Text2svg(fontPath);
+  // const svg = text2svg.toSVG(text, Object.assign({}, defaultOptions, options));
+  // // console.log(svg)
+  // if (!svg.svg) {
+  //   return 'Svg conversion failed'
+  // }
+  // const roundedCorners = Buffer.from(svg.svg);
 
   return new Promise((resolve, reject) => {
     //water转png
